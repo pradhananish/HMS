@@ -1,12 +1,32 @@
 from tkinter import *
 from PIL import Image, ImageTk
 from tkinter import ttk
+import random
+import mysql.connector
+from tkinter import messagebox
 
 class Cust_Win:
     def __init__(self,root):
         self.root=root
         self.root.title("costumer")
         self.root.geometry("1295x550+230+220")
+
+# sql connector
+        self.var_ref=StringVar()
+        x=random.randint(1000,9999)
+        self.var_ref.set(str(x))
+
+        self.var_cust_name=StringVar()
+        self.var_Pname=StringVar()
+        self.var_gender=StringVar()
+        self.var_post=StringVar()
+        self.var_mobile=StringVar()
+        self.var_email=StringVar()
+        self.var_nationality=StringVar()
+        self.var_idproof=StringVar()
+        self.var_idnumber=StringVar()
+        self.var_address=StringVar()
+        
 
 #title for hms 
         lbl_title=Label(self.root, text="ADD COSTUMER DETAILS", font=("time new roman",20,"bold"), bg="black", fg="gold", bd=4, relief=RIDGE)
@@ -26,28 +46,28 @@ class Cust_Win:
         lbl_cust_ref=Label(labelframeleft, text="Costumer Ref",fg="black", font=("times new romain",13,"bold"), padx=2, pady=6)
         lbl_cust_ref.grid(row=0, column=0, sticky=W)  
 
-        enty_ref=ttk.Entry(labelframeleft,width=29, font=("times new roman",13, "bold"))
+        enty_ref=ttk.Entry(labelframeleft,textvariable=self.var_ref,width=29, font=("times new roman",13, "bold"),state="read only")
         enty_ref.grid(row=0, column=1)
 
         # name
         cname=Label(labelframeleft, text="Costurmer Name",fg="black", font=("times new romain",13,"bold"), padx=2, pady=6)
         cname.grid(row=1, column=0, sticky=W)  
 
-        txt_cname=ttk.Entry(labelframeleft,width=29, font=("times new roman",13, "bold"))
+        txt_cname=ttk.Entry(labelframeleft,textvariable=self.var_cust_name,width=29, font=("times new roman",13, "bold"))
         txt_cname.grid(row=1, column=1)
 
         #parents name
         pname=Label(labelframeleft, text="Parents Name",fg="black", font=("times new romain",13,"bold"), padx=2, pady=6)
         pname.grid(row=2, column=0, sticky=W)  
 
-        txt_pname=ttk.Entry(labelframeleft,width=29, font=("times new roman",13, "bold"))
+        txt_pname=ttk.Entry(labelframeleft,textvariable=self.var_Pname,width=29, font=("times new roman",13, "bold"))
         txt_pname.grid(row=2, column=1)
 
         #gender
         label_gender=Label(labelframeleft, text="Gender",fg="black", font=("times new romain",13,"bold"), padx=2, pady=6)
         label_gender.grid(row=3, column=0, sticky=W)  
 
-        combo_gender=ttk.Combobox(labelframeleft,width=27, font=("times new roman",13, "bold"),state="read only")
+        combo_gender=ttk.Combobox(labelframeleft,textvariable=self.var_gender,width=27, font=("times new roman",13, "bold"),state="read only")
         combo_gender["value"]=("Male","Female","Others")
         combo_gender.current(0)
         combo_gender.grid(row=3, column=1)
@@ -58,28 +78,28 @@ class Cust_Win:
         lblpostcode=Label(labelframeleft, text="Post Code",fg="black", font=("times new romain",13,"bold"), padx=2, pady=6)
         lblpostcode.grid(row=4, column=0, sticky=W)  
 
-        txt_postcode=ttk.Entry(labelframeleft,width=29, font=("times new roman",13, "bold"))
+        txt_postcode=ttk.Entry(labelframeleft,textvariable=self.var_post,width=29, font=("times new roman",13, "bold"))
         txt_postcode.grid(row=4, column=1)
 
         # mobile number
         lblmobile=Label(labelframeleft, text="Mobile Number",fg="black", font=("times new romain",13,"bold"), padx=2, pady=6)
         lblmobile.grid(row=5, column=0, sticky=W)  
 
-        txt_mobile=ttk.Entry(labelframeleft,width=29, font=("times new roman",13, "bold"))
+        txt_mobile=ttk.Entry(labelframeleft,textvariable=self.var_mobile,width=29, font=("times new roman",13, "bold"))
         txt_mobile.grid(row=5, column=1)
 
         #email
         lblemail=Label(labelframeleft, text="Email ",fg="black", font=("times new romain",13,"bold"), padx=2, pady=6)
         lblemail.grid(row=6, column=0, sticky=W)  
 
-        txt_email=ttk.Entry(labelframeleft,width=29, font=("times new roman",13, "bold"))
+        txt_email=ttk.Entry(labelframeleft,textvariable=self.var_email,width=29, font=("times new roman",13, "bold"))
         txt_email.grid(row=6, column=1)
 
         #nationality
         lblNationality=Label(labelframeleft, text="Nationality",fg="black", font=("times new romain",13,"bold"), padx=2, pady=6)
         lblNationality.grid(row=7, column=0, sticky=W)  
 
-        combo_Nationality=ttk.Combobox(labelframeleft,width=27, font=("times new roman",13, "bold"),state="read only")
+        combo_Nationality=ttk.Combobox(labelframeleft,textvariable=self.var_nationality,width=27, font=("times new roman",13, "bold"),state="read only")
         combo_Nationality["value"]=("Nepal","china","USA", "UK", "Switzerland", "Canada", "Dubai", "Qatar")
         combo_Nationality.current(0)
         combo_Nationality.grid(row=7, column=1)
@@ -88,7 +108,7 @@ class Cust_Win:
         lblidproof=Label(labelframeleft, text="Id ",fg="black", font=("times new romain",13,"bold"), padx=2, pady=6)
         lblidproof.grid(row=8, column=0, sticky=W)  
 
-        combo_idproof=ttk.Combobox(labelframeleft,width=27, font=("times new roman",13, "bold"),state="read only")
+        combo_idproof=ttk.Combobox(labelframeleft,textvariable=self.var_idproof,width=27, font=("times new roman",13, "bold"),state="read only")
         combo_idproof["value"]=("National Id Card", "Passport", "Driving license Card")
         combo_idproof.current(0)
         combo_idproof.grid(row=8, column=1)
@@ -98,20 +118,20 @@ class Cust_Win:
         lblidnumber=Label(labelframeleft, text="Id number",fg="black", font=("times new romain",13,"bold"), padx=2, pady=6)
         lblidnumber.grid(row=9, column=0, sticky=W)  
 
-        txt_idnumber=ttk.Entry(labelframeleft,width=29, font=("times new roman",13, "bold"))
+        txt_idnumber=ttk.Entry(labelframeleft,textvariable=self.var_idnumber,width=29, font=("times new roman",13, "bold"))
         txt_idnumber.grid(row=9, column=1)
 
         #address 
         lbladdress=Label(labelframeleft, text="Address",fg="black", font=("times new romain",13,"bold"), padx=2, pady=6)
         lbladdress.grid(row=10, column=0, sticky=W)  
 
-        txt_address=ttk.Entry(labelframeleft,width=29, font=("times new roman",13, "bold"))
+        txt_address=ttk.Entry(labelframeleft,textvariable=self.var_address,width=29, font=("times new roman",13, "bold"))
         txt_address.grid(row=10, column=1)
 # buttons
         btn_frame=Frame(labelframeleft, bd=2, relief=RIDGE)
         btn_frame.place(x=0, y=400, width=412, height=40)
 
-        btnadd=Button(btn_frame,text="ADD",fg="gold",bg="black", font=("times new romain",13,"bold"), width=9)
+        btnadd=Button(btn_frame,command=self.add_data,text="ADD",fg="gold",bg="black", font=("times new romain",13,"bold"), width=9)
         btnadd.grid(row=0, column=0, padx=1)
 
         btnupdate=Button(btn_frame,text="UPDATE",fg="gold",bg="black", font=("times new romain",13,"bold"), width=9)
@@ -184,7 +204,49 @@ class Cust_Win:
         self.cust_details_table.column("address",width=100)     
         
         self.cust_details_table.pack(fill=BOTH,expand=1)
+        self.fetchdata()
 
+    def add_data(self):
+        if self.var_mobile.get()=="" or self.var_Pname.get()=="":
+                messagebox.showerror("Error","All field should be filled",parent=self.root)
+        else:
+                try:
+                        conn=mysql.connector.connect(host="localhost", username="root",password="anishpradhan",database="hotel")
+                        my_cursor=conn.cursor()
+                        my_cursor.execute("insert into customer values(%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s)",(
+                                                                                        self.var_ref.get(),
+                                                                                        self.var_cust_name.ger(),
+                                                                                        self.var_Pname.get(),
+                                                                                        self.var_gender.get(),
+                                                                                        self.var_post.ger(),
+                                                                                        self.var_mobile.get(),
+                                                                                        self.var_email.get(),
+                                                                                        self.var_nationality.get(),
+                                                                                        self.var_idproof.get(),
+                                                                                        self.var_idnumber.get(),
+                                                                                        self.var_address.get()
+                                                                                ))
+                                                                                
+                        conn.commit()
+                        self.fetchdata()
+                        conn.close()                                                                        
+                        messagebox.showinfo("Success","customer has been added",parent=self.root)
+                except Exception as es:
+                        messagebox.showwarning("Warning","Something went wrong:{str{es}}",parent=self.root)
+                        
+    def fetchdata(self):
+        conn=mysql.connector.connect(host="localhost", username="root",password="anishpradhan",database="hotel")
+        my_cursor=conn.cursor()
+        my_cursor.execute(" select * form hotel")
+        rows=my_cursor.fetchall()
+        if len(rows)!=0:
+                self.cust_details_table.delete(self.cust_details_table.get_children())
+                for i in rows:
+                        self.cust_details_table.insert("",END,values=i)
+                conn.commit()
+        conn.close()
+                       
+          
 #title for hms 
 if __name__ == '__main__':
     root=Tk()

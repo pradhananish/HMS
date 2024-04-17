@@ -3,11 +3,13 @@ from PIL import Image,ImageTk
 from cosutmer import Cust_Win
 
 
+
 class HMS():
     def __init__(self,root):
         self.root=root
         self.root.title("Hotel Management system")
         self.root.geometry("1550x800+0+0")
+
 
 #1st image
         img1=Image.open(r"C:\Users\ASUS\Desktop\HMS\image\h1.png")
@@ -83,7 +85,7 @@ class HMS():
         self.new_window=Toplevel(self.root)
         self.app=Cust_Win(self.new_window)
 
-
+    
 
 
 
