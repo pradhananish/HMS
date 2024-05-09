@@ -4,6 +4,8 @@ from tkinter import ttk
 import random
 import mysql.connector
 from tkinter import messagebox
+from tkinter import END
+from mysql.connector import Error
 
 class Cust_Win:
     def __init__(self,root):
@@ -234,17 +236,49 @@ class Cust_Win:
                 except Exception as es:
                         messagebox.showwarning("Warning","Something went wrong:{str{es}}",parent=self.root)
                         
-    def fetchdata(self):
-        conn=mysql.connector.connect(host="localhost", username="root",password="anishpradhan",database="hotel")
-        my_cursor=conn.cursor()
-        my_cursor.execute(" select * form hotel")
-        rows=my_cursor.fetchall()
-        if len(rows)!=0:
-                self.cust_details_table.delete(self.cust_details_table.get_children())
-                for i in rows:
-                        self.cust_details_table.insert("",END,values=i)
+def fetchdata(self):
+    try:
+        # Establish the connection using a context manager
+        with mysql.connector.connect(
+            host="localhost",
+            username="root",
+            password="anishpradhan",
+            database="hotel"
+        ) as conn:
+            with conn.cursor() as my_cursor:
+                # Check if the 'customer' table exists
+                my_cursor.execute("SHOW TABLES LIKE 'customer'")
+                table_exists = my_cursor.fetchone()
+
+                if not table_exists:
+                    print("Error: The 'customer' table does not exist in the 'hotel' database.")
+                    return  # Exit the function if the table doesn't exist
+
+                # Execute the query to fetch all rows from the 'customer' table
+                my_cursor.execute("SELECT * FROM customer")
+                rows = my_cursor.fetchall()
+
+                # Ensure there are results to process
+                if rows:
+                    # Clear existing data in the table widget
+                    self.cust_details_table.delete(
+                        *self.cust_details_table.get_children()
+                    )
+                    # Insert the fetched rows into the table widget
+                    for row in rows:
+                        self.cust_details_table.insert("", END, values=row)
+
+                # Commit the changes (if any)
                 conn.commit()
-        conn.close()
+
+    except mysql.connector.errors.ProgrammingError as e:
+        print("SQL Syntax Error:", e)
+
+    except mysql.connector.errors.Error as e:
+        print("Database error:", e)
+
+    except Exception as e:
+        print("An unexpected error occurred:", e)
                        
           
 #title for hms 

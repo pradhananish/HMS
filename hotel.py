@@ -1,8 +1,7 @@
 from tkinter import *
 from PIL import Image,ImageTk
 from cosutmer import Cust_Win
-
-
+from room import room_Win
 
 class HMS():
     def __init__(self,root):
@@ -46,7 +45,7 @@ class HMS():
         booking_btn=Button(btn_frame, text="BOOKING",width=22,font=("time new roman",14,"bold"), bg="black", fg="gold",bd=0,cursor="hand1")
         booking_btn.grid(row=1, column=0, pady=1)
 
-        room_btn=Button(btn_frame, text="ROOM",width=22,font=("time new roman",14,"bold"), bg="black", fg="gold",bd=0,cursor="hand1")
+        room_btn=Button(btn_frame, text="ROOM",command=self.room_details,width=22,font=("time new roman",14,"bold"), bg="black", fg="gold",bd=0,cursor="hand1")
         room_btn.grid(row=2, column=0, pady=1)
 
         payment_btn=Button(btn_frame, text="PAYMENT",width=22,font=("time new roman",14,"bold"), bg="black", fg="gold",bd=0,cursor="hand1")
@@ -85,7 +84,9 @@ class HMS():
         self.new_window=Toplevel(self.root)
         self.app=Cust_Win(self.new_window)
 
-    
+    def room_details(self):
+       self.new_window=Toplevel(self.root)
+       self.app=room_Win(self.new_window) 
 
 
 
